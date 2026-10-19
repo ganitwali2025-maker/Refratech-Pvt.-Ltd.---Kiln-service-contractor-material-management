@@ -39,7 +39,7 @@ git init
 git add .
 git commit -m "Refratech app"
 git branch -M main
-git remote add origin https://github.com/<your-username>/refratech-app.git
+git remote add origin https://github.com/ganitwali2025-maker/Refratech-Pvt.-Ltd.---Kiln-service-contractor-material-management.git
 git push -u origin main
 ```
 
