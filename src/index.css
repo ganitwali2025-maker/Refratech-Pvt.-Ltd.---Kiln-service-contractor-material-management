@@ -67,10 +67,20 @@ nav a{text-decoration:none}#root{min-height:100vh}
 .date-widget-icon{color:var(--ac);display:grid;place-items:center;flex-shrink:0}
 .date-widget-icon svg{width:22px;height:22px}
 .date-widget-details{display:flex;flex-direction:column;line-height:1.25}
-.date-widget-primary{font-size:13.5px;font-weight:700;color:var(--ink);white-space:nowrap;display:flex;align-items:center}
+.date-widget-primary{font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap;display:flex;align-items:center;gap:6px}
 .weekday-text{color:var(--ac)}
 .month-text,.year-text{font-weight:600}
-.date-dropdown-arrow{display:inline-block;margin-left:6px;font-size:12px;color:var(--mute);transition:all .15s}
+.date-dropdown-arrow{display:inline-block;margin-left:4px;font-size:12px;color:var(--mute);transition:all .15s}
+.page-header-row{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px;flex-wrap:wrap}
+.page-title-group h1{margin:0;font-size:26px}
+.page-title-group .sub{color:var(--mute);margin:3px 0 0}
+.date-refresh-bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.refresh-btn{display:inline-flex;align-items:center;gap:8px;padding:7px 15px;border-radius:8px;font-size:13.5px;font-weight:600;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink);transition:all .2s;box-shadow:0 1px 2px rgba(0,0,0,.04)}
+.refresh-btn svg{width:16px;height:16px;color:var(--mute);transition:all .3s ease}
+.refresh-btn:hover{background:var(--bg);border-color:var(--ac);color:var(--ac)}
+.refresh-btn:hover svg{color:var(--ac);transform:rotate(180deg)}
+.refresh-btn.refreshing svg{animation:spinRefresh .6s linear infinite;color:var(--ac)}
+@keyframes spinRefresh{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
 .member-wrapper{position:relative}
 .member-btn{display:flex;align-items:center;gap:10px;padding:4px 8px;border-radius:8px;background:transparent;border:none;cursor:pointer;transition:opacity .15s;color:var(--ink)}
 .member-btn:hover{opacity:.85;box-shadow:none}

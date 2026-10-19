@@ -1,6 +1,7 @@
 import { useData } from '../context/DataContext.jsx'
 import StatCard from '../components/StatCard.jsx'
 import Tag from '../components/Tag.jsx'
+import DateRefreshBar from '../components/DateRefreshBar.jsx'
 import { pend } from '../utils/calc.js'
 
 export default function Dashboard() {
@@ -12,8 +13,13 @@ export default function Dashboard() {
 
   return (
     <>
-      <h1>Dashboard</h1>
-      <p className="sub">Kiln service, contractor &amp; material management at a glance.</p>
+      <div className="page-header-row">
+        <div className="page-title-group">
+          <h1>Dashboard</h1>
+          <p className="sub">Kiln service, contractor &amp; material management at a glance.</p>
+        </div>
+        <DateRefreshBar />
+      </div>
       <div className="stats">
         <StatCard tone="s1" icon="kilns" label="Open kiln jobs" value={open} />
         <StatCard tone="s2" icon="contractors" label="Active contractors" value={active} />
