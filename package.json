@@ -1,0 +1,23 @@
+{
+  "name": "refratech-app",
+  "version": "1.0.0",
+  "description": "Refratech Pvt. Ltd. Raipur - kiln service, contractor & material management",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "jspdf": "^4.2.1",
+    "jspdf-autotable": "^5.0.9",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-router-dom": "^7.18.4"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.2",
+    "vite": "^8.3.4"
+  },
+  "private": true,
+  "type": "module"
+}
