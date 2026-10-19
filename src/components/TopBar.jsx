@@ -1,34 +1,33 @@
-import { useState, useEffect } from 'react'
-import { NavLink } from 'react-router-dom'
+import { useState, useRef } from 'react'
 import Icon from './Icon.jsx'
 
 export default function TopBar({ onOpenMenu, isLoggedOut, onToggleLogout }) {
-  const [time, setTime] = useState(new Date())
+  const dateInputRef = useRef(null)
+  const todayStr = () => new Date().toISOString().split('T')[0]
+  const [selectedDate, setSelectedDate] = useState(todayStr)
   const [showProfile, setShowProfile] = useState(false)
   const [showLogoutConfirm, setShowLogoutConfirm] = useState(false)
 
-  // Live timer for Date, Weekday, Month, Year, and Clock
-  useEffect(() => {
-    const timer = setInterval(() => setTime(new Date()), 1000)
-    return () => clearInterval(timer)
-  }, [])
+  // Safe local date formatting
+  const [y, m, d] = (selectedDate || todayStr()).split('-').map(Number)
+  const dateObj = new Date(y, (m || 1) - 1, d || 1)
+  const weekDay = dateObj.toLocaleDateString('en-US', { weekday: 'long' })
+  const day = dateObj.getDate()
+  const monthName = dateObj.toLocaleDateString('en-US', { month: 'long' })
+  const year = dateObj.getFullYear()
 
-  // Format parts: Day of week, Day of month, Month name, Year
-  const weekDay = time.toLocaleDateString('en-US', { weekday: 'long' })
-  const day = time.getDate()
-  const monthName = time.toLocaleDateString('en-US', { month: 'long' })
-  const year = time.getFullYear()
-  const formattedTime = time.toLocaleTimeString('en-US', {
-    hour: '2-digit',
-    minute: '2-digit',
-    second: '2-digit',
-    hour12: true,
-  })
+  const handleOpenDatePicker = () => {
+    try {
+      dateInputRef.current?.showPicker()
+    } catch {
+      dateInputRef.current?.focus()
+    }
+  }
 
   return (
     <>
       <header className="topbar">
-        {/* Left area: Mobile menu button & breadcrumb */}
+        {/* Left area: Mobile menu button */}
         <div className="topbar-left">
           <button
             type="button"
@@ -38,27 +37,34 @@ export default function TopBar({ onOpenMenu, isLoggedOut, onToggleLogout }) {
           >
             <Icon name="menu" />
           </button>
-          <div className="topbar-brand-chip">
-            <span className="brand-dot" />
-            <span className="brand-title">Refratech Kiln Portal</span>
-          </div>
         </div>
 
-        {/* Right side area: Home, Date/Week/Month/Year, Member Symbol, Logout */}
+        {/* Right side area: Selectable Date, Member Symbol, Logout */}
         <div className="topbar-right">
-          {/* 1. Home Button */}
-          <NavLink
-            to="/"
-            end
-            className={({ isActive }) => `topbar-btn home-btn ${isActive ? 'active' : ''}`}
-            title="Go to Home / Dashboard"
+          {/* 1. Date with Select Option (No Live Time) */}
+          <div
+            className="date-widget date-selectable"
+            onClick={handleOpenDatePicker}
+            title="Click to select a date"
+            role="button"
+            tabIndex={0}
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault()
+                handleOpenDatePicker()
+              }
+            }}
           >
-            <Icon name="home" />
-            <span className="btn-label">Home</span>
-          </NavLink>
-
-          {/* 2. Date, Weekday, Month Name & Year Widget */}
-          <div className="date-widget" title={`Today is ${weekDay}, ${day} ${monthName} ${year}`}>
+            <input
+              ref={dateInputRef}
+              type="date"
+              className="date-picker-hidden-input"
+              value={selectedDate}
+              onChange={(e) => {
+                if (e.target.value) setSelectedDate(e.target.value)
+              }}
+              tabIndex={-1}
+            />
             <div className="date-widget-icon">
               <Icon name="calendar" />
             </div>
@@ -68,10 +74,7 @@ export default function TopBar({ onOpenMenu, isLoggedOut, onToggleLogout }) {
                 <span className="day-text">{day}</span>{' '}
                 <span className="month-text">{monthName}</span>{' '}
                 <span className="year-text">{year}</span>
-              </div>
-              <div className="date-widget-time">
-                <span className="time-clock-icon">⏰</span>
-                <span className="clock-digits">{formattedTime}</span>
+                <span className="date-dropdown-arrow" aria-hidden="true">▾</span>
               </div>
             </div>
           </div>
